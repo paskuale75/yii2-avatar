@@ -12,6 +12,7 @@ class Avatar extends \yii\base\Widget
 {
 
     use ModuleAwareTrait;
+    
     /**
      * @var array options for the image tag
      */
