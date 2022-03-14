@@ -27,6 +27,8 @@ class Avatar extends \yii\base\Widget
      */
     private $attributeName = "";
 
+    private $permission = "manage-profile-image";
+
     public function init()
     {
 
@@ -49,7 +51,7 @@ class Avatar extends \yii\base\Widget
             'id' => $this->id,
             'avatarFile' => $this->module->getAvatarFileName($this->avatarId),
             'imageOptions' => $this->imageOptions,
-            'canUpdate' => $this->module->canUpdate($this->avatarId),
+            'canUpdate' => $this->module->canUpdate($this->permission),
             'mimeTypes' => $this->module->mimeTypes
 
         ]);
