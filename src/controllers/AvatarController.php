@@ -62,7 +62,7 @@ class AvatarController extends \yii\web\Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $targetId = Yii::$app->request->post('avatarId');
-        if (!$module->canUpdate($targetId))
+        if (!$module->canUpdate($module->permission))
             return ['success' => true, 'error' => Yii::t('xenon', 'Cannot delete this avatar')];
 
         $response = ['success' => true];
@@ -109,11 +109,11 @@ class AvatarController extends \yii\web\Controller
     public function actionUpload()
     {
         $module = $this->module;
-        $targetId = null;
+       
         $targetId = Yii::$app->request->post('avatarId');
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if (!$module->canUpdate($targetId))
+        if (!$module->canUpdate($module->permission))
             return ['success' => false, 'error' => Yii::t('xenon', 'Cannot update htis profile.')];
 
 

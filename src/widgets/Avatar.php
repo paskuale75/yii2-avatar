@@ -45,8 +45,7 @@ class Avatar extends \yii\base\Widget
     {
 
         $this->registerAssets();
-
-
+        
         return $this->render('avatar', [
             'attribute' => $this->attributeName,
             'id' => $this->id,
@@ -71,7 +70,7 @@ class Avatar extends \yii\base\Widget
 
         ];
 
-        if ($this->module->canUpdate($this->avatarId)) {
+        if ($this->module->canUpdate($this->permission)) {
             $config['avatarId'] = $this->avatarId;
         }
         $config = Json::htmlEncode($config);

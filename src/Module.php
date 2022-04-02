@@ -2,6 +2,7 @@
 
 namespace eseperio\avatar;
 
+use app\modules\common\business\CommonService;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\i18n\PhpMessageSource;
@@ -109,6 +110,8 @@ class Module extends \yii\base\Module
     
     public $defaultImageName = "profile";
 
+    public $permission = "manage-profile-image";
+
     public function init()
     {
         $this->registerTranslations();
@@ -136,25 +139,13 @@ class Module extends \yii\base\Module
         return file_exists($path . $id);
     }
 
-    public function canUpdate($id = null)
+    public function canUpdate($permission)
     {
-        if (empty($id))
-            return false;
-
-        $userComponent = Yii::$app->get($this->userComponent);
-
-
-        if ($this->getAvatarFileName($id) == $this->getAvatarFileName())
-            return true;
-
-        $adminUsr = $this->adminUsers;
-
-        $username = $userComponent->identity->username;
-        if (!empty($adminUsr) && in_array($username, is_array($adminUsr) ? $adminUsr : [$adminUsr]))
-            return true;
-
-        if (!empty($this->adminPermission) && is_string($this->adminPermission))
-            return $userComponent->can($this->adminPermission);
+        $this->permission = $permission;
+        if(CommonService::isAdmin() || 
+            Yii::$app->user->can($permission))  {
+                return true;
+        }
 
         return false;
     }
@@ -202,4 +193,5 @@ class Module extends \yii\base\Module
 
         return false;
     }
+
 }
